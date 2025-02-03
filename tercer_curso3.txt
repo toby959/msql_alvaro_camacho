@@ -1,0 +1,14 @@
+Para insertar datos externos => File => Open SQL Script => seleccionamos archivo =>
+cargamos con el rayo.
+___________________________________________________________________________________
+
+Para cambiar valores => seleccionamos [] => botón Editar => Substituir =>
+Localizar  CODIGO. NOMBRE.
+Substituir CODIGO. DESCRIPCION.
+=> click Substituir todo => en Workbench darle click a Reload File 
+___________________________________________________________________________________
+
+Creamos la DB "jugos_ventas" => seleccionamos Administration => Data Import Restore =>
+DumpJugosVentas => OK => click Star Import
+___________________________________________________________________________________
+  

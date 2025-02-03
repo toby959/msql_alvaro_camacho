@@ -1,0 +1,377 @@
+DB jugos_ventas =>  Stored Procedures => Create Stored Procedure => dar nombre
+=> click apply => click apply => click finish.
+______________________________________________
+* Debe tener letras, números, $ y '_'.
+* Tamaño máximo de 64 caracteres.
+* Nombre debe ser único.
+* Case Sensitive.
+______________________________________________
+Para llamar la función se usa: CALL hola_mundo;
+______________________________________________
+Para modificar Stored Procedures => click derecho sobre el seleccionado =>
+Alter Stored Procedure => modificamos.
+______________________________________________   
+Se borra con click derecho => Drop Store Procedure.
+______________________________________________
+Desde tb_producto pasar el mouse sobre la misma => seleccionar 'I' para la información de la tabla.(navegar por la solapa para ver todas las caracteristicas) 
+______________________________________________
+Para crear una "Funtions" se encuentra debajo de los SP => click sobre Funtions => 
+Create Funtions => hay creamos la función.
+______________________________________________
+
+CALL hola_mundo;
+
+CALL muestra_numero;
+
+CALL concatenar;
+
+CALL concatenar_con_comentarios;
+
+CALL concatenar_con_comentarios;
+
+CALL concatenar2;
+
+CALL exhibir_variable;
+
+CALL declaracion;
+
+-- con error
+CALL sin_declarar;  
+
+CALL atribuir_valores;
+
+CALL ejercicio;
+-- //////////////////////////////////
+
+CREATE TABLE tabla_de_productos (
+    CODIGO_DEL_PRODUCTO VARCHAR(10),
+    NOMBRE_DEL_PRODUCTO VARCHAR(50),
+    SABOR VARCHAR(20),
+    TAMANO VARCHAR(10),
+    ENVASE VARCHAR(20),
+    PRECIO_DE_LISTA DECIMAL(5,2),
+    PRIMARY KEY (CODIGO_DEL_PRODUCTO)
+);
+
+INSERT INTO tabla_de_productos (CODIGO_DEL_PRODUCTO,NOMBRE_DEL_PRODUCTO,SABOR,TAMANO,ENVASE,PRECIO_DE_LISTA)
+     VALUES ('1001001','Sabor Alpino','Mango','700 ml','Botella',7.50),
+         ('1001000','Sabor Alpino','Melón','700 ml','Botella',7.50),
+         ('1001002','Sabor Alpino','Guanábana','700 ml','Botella',7.50),
+         ('1001003','Sabor Alpino','Mandarina','700 ml','Botella',7.50),
+         ('1001004','Sabor Alpino','Banana','700 ml','Botella',7.50),
+         ('1001005','Sabor Alpino','Asaí','700 ml','Botella',7.50),
+         ('1001006','Sabor Alpino','Mango','1 Litro','Botella',7.50),
+         ('1001007','Sabor Alpino','Melón','1 Litro','Botella',7.50),
+         ('1001008','Sabor Alpino','Guanábana','1 Litro','Botella',7.50),
+         ('1001009','Sabor Alpino','Mandarina','1 Litro','Botella',7.50),
+         ('1001010','Sabor Alpino','Banana','1 Litro','Botella',7.50),
+         ('1001011','Sabor Alpino','Asaí','1 Litro','Botella',7.50);
+
+
+SELECT * FROM tabla_de_productos WHERE NOMBRE_DEL_PRODUCTO LIKE 'Sabor Alp%';
+
+SET SQL_SAFE_UPDATES = 0;
+UPDATE tabla_de_productos SET PRECIO_DE_LISTA= 5 WHERE NOMBRE_DEL_PRODUCTO LIKE 'Sabor Alp%';
+SET SQL_SAFE_UPDATES = 1;
+
+SELECT * FROM tabla_de_productos WHERE NOMBRE_DEL_PRODUCTO LIKE 'Sabor Alp%';
+
+SET SQL_SAFE_UPDATES = 0;
+DELETE FROM tabla_de_productos WHERE NOMBRE_DEL_PRODUCTO LIKE 'Sabor Alp%';
+SET SQL_SAFE_UPDATES = 1;
+
+SELECT * FROM tabla_de_productos WHERE NOMBRE_DEL_PRODUCTO LIKE 'Sabor Alp%';
+-- /////////////////////////////////////////////////////////
+
+CALL manipulacion;
+
+CALL incluir_producto;
+SELECT * FROM tabla_de_productos; 
+SELECT * FROM tabla_de_productos WHERE NOMBRE_DEL_PRODUCTO LIKE 'Sabor Inp%';
+SELECT * FROM tabla_de_productos WHERE NOMBRE_DEL_PRODUCTO = 'Sabor Intenso';
+-- ###########################################################
+
+CALL calcula_edad;
+
+CALL incluir_producto_parametros('1000123', 'Sabor de las Sierras', '700 ml', 'Mandarina',
+'Botella de Vidrio', 2.22);
+SELECT * FROM tb_productos WHERE CODIGO = '1000123'; 
+SHOW TRIGGERS LIKE 'tabla_de_productos';
+-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+CALL incluir_producto_parametros2('1000123', 'Sabor de las Sierras', '700 ml', 'Mandarina',
+'Botella de Vidrio', 2.22); 
+-- %%%%%%%%%%%%%%%%%%%%%% Porsentaje %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+CALL reajuste_comision(0.90);
+SELECT * FROM tb_vendedor;
+-- """""""""""""""""""""" Control Errores """"""""""""""""""""""""""""
+CALL incluir_producto_parametros3('1000126', 'Sabor de las Sierras', '700 ml', 'Mandarina',
+'Botella de Vidrio', 5.55); 
+SELECT * FROM tb_productos;
+-- SELECT * FROM tabla_de_productos;
+SELECT * FROM tb_productos;
+
+CALL mostrar_sabor_precio('1000125');
+-- verificar si existe!!!
+SELECT * FROM tb_productos WHERE CODIGO = '1000125';
+-- cree la factura
+INSERT INTO ventas_jugos.tb_factura1(NUMERO, FECHA, DNI, MATRICULA, IMPUESTO)
+VALUES(0105, "2017-01-01", 1471156710, 236, 0.3); 
+CALL cantidad_facturas();
+-- ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡ control de flujo ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
+-- IF <condition> THEN
+-- <if_statements>;
+-- ELSE
+-- <else_statements>;
+-- END IF;
+
+-- buscar x fecha de nacimiento
+SELECT FECHA_NACIMIENTO FROM tb_cliente
+WHERE DNI = "3623344710";
+
+CALL edad_clientes("1990-01-01");
+CALL edad_clientes(123456789);
+
+CALL evaluacion_facturas("2025-01-20");
+CALL evaluacion_facturas(CURDATE());
+-- ======= contro flujo =============
+-- IF <condition> THEN
+-- <if_statements>;
+-- ELSEIF <condition>
+-- <elseif_statements>;
+-- (..)
+-- ELSEIF<condition>
+-- <elseif_statements>;
+-- ELSE
+-- <else_statements>;
+-- END IF;
+
+SELECT * FROM tb_productos;
+/*
+precio > 12 producto caro.
+precio > 7 y precio < 12 producto comprable.
+precio < 7 producto baratiño.
+*/
+SELECT PRECIO_LISTA FROM tb_productos WHERE CODIGO = "1000123" ;
+CALL precio_producto("1004327");
+-- ejercicio ------------------
+ALTER TABLE tb_factura 
+CHANGE COLUMN FECHA FECHA_VENTA DATE;
+RENAME TABLE tb_factura TO facturas;
+RENAME TABLE tb_items_facturas TO items_facturas;
+ALTER TABLE items_facturas 
+CHANGE COLUMN CODIGO CODIGO_DEL_PRODUCTO VARCHAR(20);
+
+CALL comparacion_ventas('2015-01-01', '2015-01-15');
+-- control de flujo CASE --
+-- CASE<selector>
+-- WHEN <selector_value_1> THEN <then_statement_1>;
+-- WHEN <selector_value_1> THEN <then_statement_2>;
+-- (...)
+-- WHEN <selector_value_n> THEN <then_statement_n>;
+-- [ELSE <ese_statements>]
+-- END CASE;
+
+SELECT DISTINCT SABOR FROM tb_productos; 
+/*
+Maracuyá Ricaardo
+Limón Ricaardo
+Frutilla Ricaardo
+Uva Ricaardo
+Sandía normal
+Mango normal
+Los demas zafan 
+*/
+
+SELECT SABOR FROM tb_productos WHERE CODIGO = "1004327"; 
+CALL define_sabor("746596");
+CALL define_sabor("783663");
+CALL define_sabor("826490");
+
+CALL define_sabor_con_error("812829");
+-- --------------------------------
+-- crear SP desde un script --
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `precio_producto_case`(vcodigo VARCHAR(20))
+BEGIN
+DECLARE vresultado VARCHAR(40);
+DECLARE vprecio FLOAT;
+SELECT PRECIO_LISTA INTO vprecio FROM tb_productos 
+WHERE CODIGO = vcodigo;
+
+CASE
+WHEN vprecio >= 12 THEN SET vresultado = "Producto carito!!!";
+WHEN vprecio >= 7 AND vprecio < 12 THEN SET vresultado = "Producto comprable.";
+WHEN vprecio < 7 THEN SET vresultado = "Producto baratiño!!!.";
+END CASE;
+SELECT vresultado;
+END $$ 
+
+
+CALL precio_producto_case("746596");
+CALL precio_producto_case("783663");
+CALL precio_producto_case("826490");
+-- ----------------------------------------------------
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `precio_producto_case2`(vcodigo VARCHAR(20))
+BEGIN
+    DECLARE vresultado VARCHAR(40);
+    DECLARE vprecio FLOAT;
+
+    -- Obtener el precio del producto
+    SELECT PRECIO_LISTA INTO vprecio FROM tb_productos 
+    WHERE CODIGO = vcodigo;
+
+    -- Evaluar el precio y asignar un resultado
+    SET vresultado = CASE
+        WHEN vprecio >= 12 THEN "Producto carito!!!"
+        WHEN vprecio >= 7 AND vprecio < 12 THEN "Producto comprable."
+        WHEN vprecio < 7 THEN "Producto baratiño!!!"
+        ELSE "Precio no disponible." -- Manejo de caso donde no se encuentra el precio
+    END;
+
+    -- Seleccionar el resultado
+    SELECT vresultado;
+END $$ 
+CALL precio_producto_case2("746596");
+CALL precio_producto_case2("783663");
+CALL precio_producto_case2("826490");
+-- --- case
+CALL comparacion_ventas_case('2015-01-01', '2015-01-15');
+-- control flujo While ---------------------------------
+-- WHILE <condition>
+-- DO <statements>;
+-- END WHILE;
+
+ 
+CREATE TABLE tb_looping (
+    ID INT
+);
+SELECT 
+    *
+FROM
+    tb_looping; 
+
+SET SQL_SAFE_UPDATES = 0;
+DELETE FROM tb_looping 
+WHERE
+    ID = 1;
+SET SQL_SAFE_UPDATES = 1;
+
+SET SQL_SAFE_UPDATES = 0;
+DELETE FROM tb_looping;
+SET SQL_SAFE_UPDATES = 1;
+
+CALL looping(1,10);
+-- ej ----
+CALL suma_dias_facturas();
+SELECT 
+    *
+FROM
+    facturas;
+-- select into  => un valor a una variable NADA MAS
+  CALL problema_select_into;
+  
+-- ################################################
+-- cursor -----------------------------------------
+CALL cursor_1;
+SELECT 
+    NOMBRE
+FROM
+    tb_cliente
+LIMIT 4;
+
+CALL cursor_looping;
+SELECT 
+    NOMBRE
+FROM
+    tb_cliente;
+
+CALL limite_creditos();
+-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+CREATE TABLE tabla_de_clientes (
+    DNI VARCHAR(20) PRIMARY KEY,
+    DIRECCION_1 VARCHAR(255),
+    DIRECCION_2 VARCHAR(255),
+    BARRIO VARCHAR(100),
+    CIUDAD VARCHAR(100),
+    ESTADO VARCHAR(100),
+    CP VARCHAR(10),
+    FECHA_NACIMIENTO DATE,
+    EDAD INT,
+    SEXO CHAR(1),
+    LIMITE_CREDITO DECIMAL(10 , 2 ),
+    VOLUMEN_COMPRA DECIMAL(10 , 2 ),
+    PRIMERA_COMPRA DATE
+);
+
+ALTER TABLE tabla_de_clientes
+ADD NOMBRE VARCHAR(80);
+
+ALTER TABLE TABLA_DE_CLIENTES
+MODIFY PRIMERA_COMPRA TINYINT(1);
+
+
+
+SELECT 
+    *
+FROM
+    tabla_de_clientes;
+ 
+INSERT INTO TABLA_DE_CLIENTES (DNI, NOMBRE, DIRECCION_1, DIRECCION_2, BARRIO, CIUDAD, ESTADO, CP, FECHA_NACIMIENTO, EDAD, SEXO, LIMITE_CREDITO, VOLUMEN_COMPRA, PRIMERA_COMPRA) VALUES ('9283760797', 'Edson Calisaya', 'Sta Úrsula Xitla', '', 'Barrio del Niño Jesús', 'Ciudad de México', 'EM', '22002002', '1995-01-07', 25, 'M', 150000, 250000, 1);
+INSERT INTO TABLA_DE_CLIENTES (DNI, NOMBRE, DIRECCION_1, DIRECCION_2, BARRIO, CIUDAD, ESTADO, CP, FECHA_NACIMIENTO, EDAD, SEXO, LIMITE_CREDITO, VOLUMEN_COMPRA, PRIMERA_COMPRA) VALUES ('7771579781', 'Marcelo Perez', 'F.C. de Cuernavaca 13', '', 'Carola', 'Ciudad de México', 'EM', '88202912', '1992-01-25', 29, 'M', 120000, 200000, 1);
+INSERT INTO TABLA_DE_CLIENTES (DNI, NOMBRE, DIRECCION_1, DIRECCION_2, BARRIO, CIUDAD, ESTADO, CP, FECHA_NACIMIENTO, EDAD, SEXO, LIMITE_CREDITO, VOLUMEN_COMPRA, PRIMERA_COMPRA) VALUES ('5576228759', 'Patricia Olivera', 'Pachuca 75', '', 'Condesa', 'Ciudad de México', 'EM', '88192029', '1995-01-14', 25, 'F', 70000, 160000, 1);
+INSERT INTO TABLA_DE_CLIENTES (DNI, NOMBRE, DIRECCION_1, DIRECCION_2, BARRIO, CIUDAD, ESTADO, CP, FECHA_NACIMIENTO, EDAD, SEXO, LIMITE_CREDITO, VOLUMEN_COMPRA, PRIMERA_COMPRA) VALUES ('8502682733', 'Luis Silva', 'Prol. 16 de Septiembre 1156', '', 'Contadero', 'Ciudad de México', 'EM', '82122020', '1995-01-07', 25, 'M', 110000, 190000, 0);
+INSERT INTO TABLA_DE_CLIENTES (DNI, NOMBRE, DIRECCION_1, DIRECCION_2, BARRIO, CIUDAD, ESTADO, CP, FECHA_NACIMIENTO, EDAD, SEXO, LIMITE_CREDITO, VOLUMEN_COMPRA, PRIMERA_COMPRA) VALUES ('1471156710', 'Erica Carvajo', 'Heriberto Frías 1107', '', 'Del Valle', 'Ciudad de México', 'EM', '80012212', '1990-01-01', 30, 'F', 170000, 245000, 0);
+INSERT INTO TABLA_DE_CLIENTES (DNI, NOMBRE, DIRECCION_1, DIRECCION_2, BARRIO, CIUDAD, ESTADO, CP, FECHA_NACIMIENTO, EDAD, SEXO, LIMITE_CREDITO, VOLUMEN_COMPRA, PRIMERA_COMPRA) VALUES ('3623344710', 'Marcos Rosas', 'Av. Universidad', '', 'Del Valle', 'Ciudad de México', 'EM', '22002012', '1995-01-13', 26, 'M', 110000, 220000, 1);
+INSERT INTO TABLA_DE_CLIENTES (DNI, NOMBRE, DIRECCION_1, DIRECCION_2, BARRIO, CIUDAD, ESTADO, CP, FECHA_NACIMIENTO, EDAD, SEXO, LIMITE_CREDITO, VOLUMEN_COMPRA, PRIMERA_COMPRA) VALUES ('50534475787', 'Abel Pintos', 'Carr. México-Toluca 1499', '', 'Cuajimalpa', 'Ciudad de México', 'EM', '22000212', '1995-01-11', 25, 'M', 170000, 260000, 0);
+INSERT INTO TABLA_DE_CLIENTES (DNI, NOMBRE, DIRECCION_1, DIRECCION_2, BARRIO, CIUDAD, ESTADO, CP, FECHA_NACIMIENTO, EDAD, SEXO, LIMITE_CREDITO, VOLUMEN_COMPRA, PRIMERA_COMPRA) VALUES ('5840119709', 'Gabriel Roca', 'Eje Central Lázaro Cárdenas 911', '', 'Del Valle', 'Ciudad de México', 'EM', '80010221', '1985-01-16', 36, 'M', 140000, 210000, 1);
+INSERT INTO TABLA_DE_CLIENTES (DNI, NOMBRE, DIRECCION_1, DIRECCION_2, BARRIO, CIUDAD, ESTADO, CP, FECHA_NACIMIENTO, EDAD, SEXO, LIMITE_CREDITO, VOLUMEN_COMPRA, PRIMERA_COMPRA) VALUES ('94387575700', 'Walter Soruco', 'Calz. de Tlalpan 2980', '', 'Ex Hacienda Coapa', 'Ciudad de México', 'EM', '22000201', '1989-01-20', 31, 'M', 60000, 120000, 1);
+INSERT INTO TABLA_DE_CLIENTES (DNI, NOMBRE, DIRECCION_1, DIRECCION_2, BARRIO, CIUDAD, ESTADO, CP, FECHA_NACIMIENTO, EDAD, SEXO, LIMITE_CREDITO, VOLUMEN_COMPRA, PRIMERA_COMPRA) VALUES ('8719655770', 'Carlos Santivañez', 'Calz. del Hueso 363', '', 'Floresta Coyoacán', 'Ciudad de México', 'EM', '81192002', '1983-01-20', 37, 'M', 200000, 240000, 0);
+INSERT INTO TABLA_DE_CLIENTES (DNI, NOMBRE, DIRECCION_1, DIRECCION_2, BARRIO, CIUDAD, ESTADO, CP, FECHA_NACIMIENTO, EDAD, SEXO, LIMITE_CREDITO, VOLUMEN_COMPRA, PRIMERA_COMPRA) VALUES ('5648641702', 'Paolo Mendez', 'Martires de Tacubaya 65', '', 'Héroes de Padierna', 'Ciudad de México', 'EM', '21002020', '1991-01-30', 29, 'M', 120000, 220000, 0);
+INSERT INTO TABLA_DE_CLIENTES (DNI, NOMBRE, DIRECCION_1, DIRECCION_2, BARRIO, CIUDAD, ESTADO, CP, FECHA_NACIMIENTO, EDAD, SEXO, LIMITE_CREDITO, VOLUMEN_COMPRA, PRIMERA_COMPRA) VALUES ('492472718', 'Jorge Castro', 'Federal México-Toluca 5690', '', 'Locaxco', 'Ciudad de México', 'EM', '22012002', '1994-01-19', 26, 'M', 75000, 95000, 1);
+INSERT INTO TABLA_DE_CLIENTES (DNI, NOMBRE, DIRECCION_1, DIRECCION_2, BARRIO, CIUDAD, ESTADO, CP, FECHA_NACIMIENTO, EDAD, SEXO, LIMITE_CREDITO, VOLUMEN_COMPRA, PRIMERA_COMPRA) VALUES ('9275760796', 'Alberto Rodriguez', 'Circunvalación Oblatos 690', '', 'Oblatos', 'Guadalajara', 'JC', '44700000', '1991-12-28', 26, 'M', 75000, 95000, 1);
+INSERT INTO TABLA_DE_CLIENTES (DNI, NOMBRE, DIRECCION_1, DIRECCION_2, BARRIO, CIUDAD, ESTADO, CP, FECHA_NACIMIENTO, EDAD, SEXO, LIMITE_CREDITO, VOLUMEN_COMPRA, PRIMERA_COMPRA) VALUES ('94387575701', 'María Jimenez', 'Av. Libertadores 457', '', 'Barragán Hernández', 'Guadalajara', 'JC', '44469000', '1995-05-13', 26, 'F', 120000, 300000, 1);
+INSERT INTO TABLA_DE_CLIENTES (DNI, NOMBRE, DIRECCION_1, DIRECCION_2, BARRIO, CIUDAD, ESTADO, CP, FECHA_NACIMIENTO, EDAD, SEXO, LIMITE_CREDITO, VOLUMEN_COMPRA, PRIMERA_COMPRA) VALUES ('95939180787', 'Ximena Gómez', 'Jaguares 822', '', 'Alcalde Barranquitas', 'Guadalajara', 'JC',	'44270000', '1992-01-05', 16, 'F', 90000, 18000, 0);
+
+
+CALL cursor_looping_varios_campos;
+-- ejercicio /////////////////////////////////
+CALL campo_adicional(2, 2015);
+-- ###########################################
+-- Funcion -----------------------------------
+-- CREATE FUNCTION function_name(parameters)
+-- RETURNS datatype;
+-- BEGIN
+-- DECLARE <declaration_statement>;
+-- (..)
+-- <executable_statement>;
+-- (..)
+-- RETURN <statement>
+-- (..)
+-- END;
+
+-- Hay que modificar xq por defecto no se puede
+-- (DEPRECADO) --
+SET GLOBAL log_bin_trust_function_creators=1;
+-- (DEPRECADO) --
+
+CREATE FUNCTION mi_funcion() 
+RETURNS INT 
+DETERMINISTIC 
+BEGIN
+    RETURN 1; -- Ejemplo simple
+END;
+
+SELECT * FROM tb_productos;
+-- un valor
+SELECT f_define_sabor("Maracuya");
+-- todos los valores
+SELECT DESCRIPCION, SABOR, f_define_sabor(SABOR) AS TIPO
+FROM tb_productos; 
+
+SELECT DESCRIPCION, SABOR FROM tb_productos
+WHERE f_define_sabor(SABOR) = "Ricaardo!!!";
+-- ejercicio -------------------------------
+SELECT f_numero_facturas("2015-01-01") AS total_facturas;
+-- correccion ---
+CALL comparacion_ventas_revision('2015-01-01', '2015-01-22');
